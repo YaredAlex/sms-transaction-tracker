@@ -1,8 +1,7 @@
 import 'dart:io';
-import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
-
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
@@ -357,7 +356,6 @@ class _AccountShareQrPageState extends State<AccountShareQrPage> {
       ),
     );
   }
-
 }
 
 class _TotalsRandomColorSymbol extends PrettyQrShape {
@@ -382,10 +380,8 @@ class _TotalsRandomColorSymbol extends PrettyQrShape {
     final moduleDimension = canvasBounds.longestSide / matrix.version.dimension;
 
     final radius = moduleDimension / 2;
-    final effectiveRadius =
-        PrettyQrShape.clampDouble(radius * rounding, 0, radius);
-    final effectiveDensity =
-        radius - PrettyQrShape.clampDouble(radius * density, 1, radius);
+    final effectiveRadius = clampDouble(radius * rounding, 0, radius);
+    final effectiveDensity = radius - clampDouble(radius * density, 1, radius);
 
     for (final module in matrix) {
       if (!module.isDark) continue;
@@ -654,9 +650,7 @@ class _AccountShareTile extends StatelessWidget {
               ),
       ),
       title: Text(
-        account.accountNumber.isNotEmpty
-            ? account.accountNumber
-            : 'Account',
+        account.accountNumber.isNotEmpty ? account.accountNumber : 'Account',
         style: theme.textTheme.titleSmall?.copyWith(
           fontWeight: FontWeight.w600,
           color: colorScheme.onSurface,
