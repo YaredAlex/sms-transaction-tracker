@@ -6,7 +6,6 @@ import 'package:totals/providers/transaction_provider.dart';
 import 'package:totals/models/transaction.dart';
 import 'package:totals/services/bank_config_service.dart';
 import 'package:totals/services/sms_service.dart';
-import 'package:totals/widgets/auth_page.dart';
 import 'package:totals/widgets/home_tabs.dart';
 import 'package:totals/widgets/banks_summary_list.dart';
 import 'package:totals/widgets/bank_detail.dart';
@@ -46,7 +45,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final PageController _mainPageController =
       PageController(initialPage: 2); // Start on Home (index 2)
 
-  bool _isAuthenticated = false;
+  bool _isAuthenticated = true;
   bool _isAuthenticating = false;
   bool _hasCheckedInternet = false;
   bool _hasCheckedNotificationPermissions = false;
@@ -256,9 +255,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Future<void> _handleQuickCategorize(String reference, int categoryId) async {
     if (!mounted) return;
     final provider = Provider.of<TransactionProvider>(context, listen: false);
-    final transaction = provider.transactions.where(
-      (t) => t.reference == reference,
-    ).firstOrNull;
+    final transaction = provider.transactions
+        .where(
+          (t) => t.reference == reference,
+        )
+        .firstOrNull;
 
     if (transaction == null) {
       if (kDebugMode) {
@@ -277,7 +278,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     await provider.setCategoryForTransaction(transaction, category);
     if (kDebugMode) {
-      print('debug: Quick categorized ${transaction.reference} as ${category.name}');
+      print(
+          'debug: Quick categorized ${transaction.reference} as ${category.name}');
     }
   }
 
@@ -1295,9 +1297,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    if (!_isAuthenticated) {
-      return AuthPage(onAuthenticate: authenticateUser);
-    }
+    // if (!_isAuthenticated) {
+    //   return AuthPage(onAuthenticate: authenticateUser);
+    // }
 
     return Consumer<TransactionProvider>(
       builder: (context, provider, child) {
