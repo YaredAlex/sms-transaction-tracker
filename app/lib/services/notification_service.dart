@@ -48,9 +48,8 @@ class NotificationService {
       onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
 
-    final androidPlugin =
-        _plugin.resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>();
+    final androidPlugin = _plugin.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
     await androidPlugin?.createNotificationChannel(
       const AndroidNotificationChannel(
         _transactionChannelId,
@@ -91,7 +90,8 @@ class NotificationService {
     _handleNotificationResponse(response);
   }
 
-  Future<void> _handleNotificationResponse(NotificationResponse response) async {
+  Future<void> _handleNotificationResponse(
+      NotificationResponse response) async {
     try {
       if (response.notificationResponseType ==
           NotificationResponseType.selectedNotificationAction) {
@@ -120,14 +120,16 @@ class NotificationService {
     }
   }
 
-  Future<void> _handleQuickCategorizeAction(String actionId, int? notificationId) async {
+  Future<void> _handleQuickCategorizeAction(
+      String actionId, int? notificationId) async {
     try {
       await ensureInitialized();
       // Parse: tx:<reference>|cat:<categoryId>
       final parts = actionId.split('|cat:');
       if (parts.length != 2) return;
 
-      final reference = Uri.decodeComponent(parts[0].substring(3)); // Remove 'tx:'
+      final reference =
+          Uri.decodeComponent(parts[0].substring(3)); // Remove 'tx:'
       final categoryId = int.tryParse(parts[1]);
       if (categoryId == null) return;
 
@@ -255,14 +257,12 @@ class NotificationService {
       if (kIsWeb) return;
 
       if (defaultTargetPlatform == TargetPlatform.android) {
-        final androidPlugin =
-            _plugin.resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>();
+        final androidPlugin = _plugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
         await androidPlugin?.requestNotificationsPermission();
       } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-        final iosPlugin =
-            _plugin.resolvePlatformSpecificImplementation<
-                IOSFlutterLocalNotificationsPlugin>();
+        final iosPlugin = _plugin.resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>();
         await iosPlugin?.requestPermissions(
           alert: true,
           badge: true,
@@ -433,8 +433,7 @@ class NotificationService {
       final percent = (clamped * 100).round();
       final title = bankLabel == null ? 'Syncing account' : '$bankLabel sync';
       final maskedAccount = _maskAccountNumber(accountNumber);
-      final body =
-          maskedAccount == null ? stage : '$stage - $maskedAccount';
+      final body = maskedAccount == null ? stage : '$stage - $maskedAccount';
 
       await _plugin.show(
         _accountSyncNotificationId(accountNumber, bankId),
@@ -477,8 +476,9 @@ class NotificationService {
     try {
       await ensureInitialized();
 
-      final title =
-          bankLabel == null ? 'Account sync complete' : '$bankLabel sync complete';
+      final title = bankLabel == null
+          ? 'Account sync complete'
+          : '$bankLabel sync complete';
       final body = message ?? 'Your transactions are up to date.';
 
       await _plugin.show(
