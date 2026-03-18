@@ -25,7 +25,7 @@ Thank you for your interest in contributing to Totals! This document provides gu
 
 ### Prerequisites
 
-- Flutter SDK (>=3.2.6)
+- Flutter SDK (==3.27.4) it might fail to run if SDK version is different
 - Dart SDK
 - Git
 - Android Studio / Xcode (for mobile development)
@@ -34,17 +34,22 @@ Thank you for your interest in contributing to Totals! This document provides gu
 ### Setting Up Your Development Environment
 
 1. **Fork and Clone the Repository**
+
    ```bash
    git clone https://github.com/detached-space/totals.git
    cd totals/app
    ```
 
 2. **Install Dependencies**
+
    ```bash
+   #upgrade win32 if you running on windows it is important
+   flutter pub upgrade win32
    flutter pub get
    ```
 
 3. **Verify Setup**
+
    ```bash
    flutter doctor
    flutter analyze
@@ -68,6 +73,7 @@ Use descriptive branch names that indicate the type of change:
 - `test/description` - Test additions or updates
 
 Examples:
+
 - `feature/add-dashen-bank-support`
 - `fix/sms-parsing-error`
 - `refactor/transaction-service`
@@ -100,14 +106,15 @@ git checkout -b feature/your-feature-name
    - Use `SCREAMING_CAPS` for constants
 
 2. **File Organization**
+
    ```dart
    // 1. Imports (dart: imports first, then package:, then relative)
    import 'dart:async';
    import 'package:flutter/material.dart';
    import 'package:totals/models/account.dart';
-   
+
    // 2. Exports (if any)
-   
+
    // 3. Main code
    ```
 
@@ -133,7 +140,7 @@ git checkout -b feature/your-feature-name
 // Good
 class AccountCard extends StatelessWidget {
   final Account account;
-  
+
   const AccountCard({
     required this.account,
     super.key,
@@ -185,13 +192,13 @@ void main() {
     test('should create account successfully', () async {
       // Arrange
       final repository = AccountRepository();
-      
+
       // Act
       final account = await repository.createAccount(
         accountNumber: '123456',
         bankId: 1,
       );
-      
+
       // Assert
       expect(account, isNotNull);
       expect(account.accountNumber, equals('123456'));
@@ -246,6 +253,7 @@ Prevent crash when account balance is null by providing default value.
 ### Before Submitting
 
 1. **Update Your Branch**
+
    ```bash
    git checkout main
    git pull origin main
@@ -254,6 +262,7 @@ Prevent crash when account balance is null by providing default value.
    ```
 
 2. **Run Checks**
+
    ```bash
    flutter analyze
    flutter test
@@ -400,4 +409,3 @@ lib/
 ## Thank You!
 
 Your contributions make Totals better for everyone. We appreciate your time and effort!
-
